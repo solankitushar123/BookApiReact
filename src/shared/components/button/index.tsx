@@ -5,7 +5,7 @@ interface ButtonProps {
 
 export default function Button({ label,caption}: ButtonProps) {
   return (
-    <button>
+    <button className=" ">
       {label}
     {caption}
     </button>

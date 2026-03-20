@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Loader } from "../../shared/components/loader";
 import { ApiService } from '../../services';
 import Grid from "../../shared/components/grid";
-import BookForm from "./createBook";
+import BookForm from "./createBook/index";
 
 interface BookItem {
   bookId: number;
@@ -56,7 +56,7 @@ export default function Books() {
       {/* 🔹 Add Button */}
       <button
         onClick={() => setShowForm(true)}
-        className="bg-green-600 text-white px-4 py-2 rounded mb-4 hover:bg-green-700"
+        className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
       >
         Add Book
       </button>
