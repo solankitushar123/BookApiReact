@@ -27,7 +27,20 @@ async function request<TResult>(method: string, url: string, body?: unknown) {
       'Content-Type': 'application/json; charset=utf-8',
     },
   });
+  if (!response.ok) {
 
+    if (response.status === 404) {
+      console.warn("Record not found");
+      return {} as TResult;
+    }
+
+    throw new Error("API error " + response.status);
+  }
+
+  // handle empty response (DELETE)
+  if (response.status === 204) {
+    return {} as TResult;
+  }
   const json = await response.json();
 
   return json as TResult;

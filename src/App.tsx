@@ -6,7 +6,7 @@ import Books from "./features/Books";
 import Category from "./features/Category";
 import Members from "./features/Members/Index";
 import IssuedBooks from "./features/IssuedBooks/Index";
-import Button from "./shared/components/button";
+import {Button} from "./shared/components/button";
 
 function App() {
   return (
@@ -38,27 +38,18 @@ function App() {
           <div className="flex gap-4 font-medium">
             
             {[
-              { to: "/Books", label: "Books" },
-              { to: "/Categories", label: "Categories" },
-              { to: "/Members", label: "Members" },
-              { to: "/IssuedBooks", label: "Issued Books" },
+              { to: "/books", label: "Books" },
+              { to: "/Category", label: "Categories" },
+              { to: "/Member", label: "Members" },
+              { to: "/IssueBook", label: "Issued Books" },
             ].map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="
-                  px-4 py-2 
-                  rounded-xl 
-                  transition-all duration-300 
-                  text-white
-
-                  hover:text-white 
-                  hover:bg-gradient-to-r 
-                  hover:from-purple-600 
-                  hover:to-indigo-600 
-                  hover:shadow-md">
-                <Button label={item.label} />
-              </Link>
+               <Link
+    key={item.to}
+    to={item.to}
+    
+  >
+    <Button caption={item.label} /> 
+  </Link>
             ))}
 
           </div>
@@ -69,10 +60,10 @@ function App() {
       <div className="">
         <Routes>
           <Route index element={<Home />} />
-          <Route path="/Books" element={<Books />} />
-          <Route path="/Categories" element={<Category />} />
-          <Route path="/Members" element={<Members />} />
-          <Route path="/IssuedBooks" element={<IssuedBooks />} />
+          <Route path="/books/*" element={<Books />} />
+          <Route path="/Category" element={<Category />} />
+          <Route path="/Member" element={<Members />} />
+          <Route path="/IssueBook" element={<IssuedBooks />} />
         </Routes>
       </div>
 <footer className="py-4 mt-auto text-center text-sm text-white/70 border-t border-white/20 bg-white/10 backdrop-blur-md">

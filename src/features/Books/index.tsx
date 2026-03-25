@@ -1,87 +1,26 @@
-import { useEffect, useState } from "react";
-import { Loader } from "../../shared/components/loader";
-import { ApiService } from '../../services';
-import Grid from "../../shared/components/grid";
-import BookForm from "./createBook/index";
-
-interface BookItem {
-  bookId: number;
-  bookName: string;
-  author: string;
-  publishers: string;
-  categoryId: number;
-  categoryName: string;
-}
-
-type CreateBookDto = {
-  bookName: string;
-  author: string;
-  publishers: string;
-  categoryId: number;
-};
+import { Route, Routes } from 'react-router-dom';
+import Create from './createBook'; 
+import Edit from './UpdateBook';    
+import GetBook from './getBook';
 
 export default function Books() {
-  const [bookList, setBookList] = useState<BookItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-
-  // 🔹 Fetch Books
-  useEffect(() => {
-    ApiService.get<BookItem[]>("books")
-      .then(data => {
-        setBookList(data);
-        setIsLoading(false);
-      })
-      .catch(() => setIsLoading(false));
-  }, []);
-
-  // ✅ Create Book function (FIXED)
-  const createBook = (newBook: CreateBookDto) => {
-    ApiService.post<BookItem>("books", newBook)
-      .then((data) => {
-        // update UI
-        setBookList(prev => [...prev, data]);
-
-        // close modal
-        setShowForm(false);
-      })
-      .catch(() => {
-        console.error("Failed to create book");
-      });
-  };
-
   return (
-    <div className="max-w-6xl mx-auto mt-12 p-6 bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl shadow-lg">
 
-      {/* 🔹 Add Button */}
-      <button
-        onClick={() => setShowForm(true)}
-        className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
-      >
-        Add Book
-      </button>
+    <div className="flex justify-center items-center min-h-[80vh]">
+      
+      <Routes>
 
-      {/* 🔹 Modal Form */}
-      {showForm && (
-        <BookForm
-          onSubmit={createBook}
-          onClose={() => setShowForm(false)}
-        />
-      )}
+        {/* GET /books */}
+        <Route index element={<GetBook />} />
 
-      {/* 🔹 Title */}
-      <h2 className="text-3xl font-bold text-center mb-8 text-blue-700 tracking-wide">
-        Books List
-      </h2>
+        {/* GET /books/create */}
+        <Route path="create" element={<Create />} />
 
-      {/* 🔹 Loader / Grid */}
-      {isLoading ? (
-        <div className="flex justify-center items-center h-64">
-          <Loader />
-        </div>
-      ) : (
-        <Grid<BookItem> data={bookList} />
-      )}
+        {/* GET /books/edit/1 */}
+        <Route path="edit/:id" element={<Edit />} />
+
+      </Routes>
+
     </div>
   );
 }
